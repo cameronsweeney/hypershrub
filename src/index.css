@@ -1,0 +1,206 @@
+/* declare global variables */
+:root {
+  /* (a+b)/a = a/b = ϕ */
+  --measure-ab: 2.618fr;
+  --measure-a: 1.618fr;
+  --measure-b: 1fr;
+
+  /* same stuff but for text */
+  --measure-half: 0.625rem;
+  
+  --measure-1: 1rem;
+  --measure-1_5: 1.265rem;
+  --measure-2: 1.6rem;
+  --measure-3: 2.56rem;
+  --measure-4: 4.096rem;
+
+  /* colors */
+  --color-bg: #FFFFFF;
+  --color-bg-terminal: #212D40;
+
+  --color-node: #BBDEF0;
+  --color-node-header: #6B46C1; /* Chakra UI's Purple 600 */
+  --color-node-focus: #F08700;
+  --color-node-header-border: #00A6A6;
+
+  --color-text-lt: white;
+
+  --color-border: black;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+#react-root {
+  width: 100%;
+  height: 100%;
+  
+  background-color: var(--color-bg);
+  color: #3A2818;
+}
+
+.layout_grid {
+  display: grid;
+  grid-template-columns: var(--measure-b) var(--measure-ab);
+  grid-template-rows: var(--measure-a) var(--measure-b);
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.control_panel {
+  grid-column: 1;
+  grid-row: 1;
+  font-size: var(--measure-1);
+  padding: 1ch;
+
+  background-color: var(--color-bg-terminal);
+}
+
+.control_panel textarea {
+  min-width: 100%;
+  min-height: 85%;
+
+  padding: 1ch;
+
+  background-color: var(--color-bg);
+  border: thick white solid;
+  border-radius: var(--measure-1);
+  resize: none;
+
+  font-family: 'Inconsolata', monospace;
+  font-size: var(--measure-1_5);
+
+  outline: none !important;
+}
+
+.control_panel textarea:focus {
+  border: thick var(--color-node-header) solid;
+}
+
+.control_panel div {
+  height: 15%;
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+  justify-content: space-around;
+  
+  color: var(--color-text-lt)
+}
+
+.terminal {
+  grid-column: 1;
+  grid-row: 2;
+
+  background-color: var(--color-bg-terminal);
+
+  font-family: 'Share Tech Mono', monospace;
+  font-size: var(--measure-1_5);
+  color: var(--color-text-lt);
+
+  display: inline;
+
+  overflow-y: scroll;
+}
+
+.terminal button {
+  height: 100%;
+  width: 100%;
+}
+
+.terminal span {
+  display: inline;
+  white-space: pre-line;
+}
+
+.terminal p {
+  display: inline;
+}
+
+.terminal_cursor {
+  padding-bottom: var(--measure-3);
+}
+
+.command_line {
+  border: none;
+  margin: none;
+  padding: none;
+  background: transparent;
+  min-width: 0;
+  min-height: 0;
+  outline: none !important;
+  caret-color: transparent;
+}
+
+.tree_display {
+  font-family: "Merriweather Sans";
+  grid-column: 2;
+  grid-row: 1 / span 2;
+
+  padding: 3ch;
+
+  display: grid;
+
+  overflow: scroll;
+}
+
+
+/* styling of individual nodes */
+.node {
+  max-width: 25ch;
+
+  display: grid;
+  grid-template-columns: var(--measure-ab) var(--measure-b);
+
+  background-color: var(--color-node);
+  border-radius: var(--measure-2) var(--measure-1) var(--measure-1) var(--measure-1);
+
+  margin-bottom: var(--measure-1);
+}
+
+.node h1 {
+  grid-row: 1;
+  grid-column: 1;
+
+  margin-top: 0;
+
+  background-color: var(--color-node-header);
+  color: var(--color-text-lt);
+  border-radius: var(--measure-2) 0 var(--measure-1) 0;
+
+  justify-content: center;
+  font-size: var(--measure-2);
+  padding: var(--measure-half) var(--measure-1) var(--measure-half) var(--measure-1);
+}
+
+.node div { /* where the buttons are */
+  grid-column: 2;
+  grid-row: 1 / span 2;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+
+.node p {
+  grid-row: 2;
+  grid-column: 1;
+  min-height: 1rem;
+  padding: var(--measure-1);
+}
+
+.node ul {
+  grid-row: 2;
+  grid-column: 1;
+  min-height: 1rem;
+  padding: var(--measure-1);
+
+  list-style-position: inside;
+}
