@@ -28,6 +28,11 @@
   --color-border: black;
 }
 
+/*
+https://coolors.co/f08700-f49f0a-efca08-00a6a6-bbdef0
+
+*/
+
 body {
   margin: 0;
   height: 100vh;
@@ -137,63 +142,67 @@ body {
   caret-color: transparent;
 }
 
-.tree_display {
-  font-family: "Merriweather Sans";
+.forest_padding {
   grid-column: 2;
   grid-row: 1 / span 2;
+  padding: 3ch;
+}
+
+.tree_display {
+  height: 100%;
+  width: 100%;
+  font-family: "Merriweather Sans";
+
 
   padding: 3ch;
 
-  display: grid;
-
-  overflow: scroll;
+  position: relative; 
 }
 
 
 /* styling of individual nodes */
 .node {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   max-width: 25ch;
 
-  display: grid;
-  grid-template-columns: var(--measure-ab) var(--measure-b);
 
   background-color: var(--color-node);
-  border-radius: var(--measure-2) var(--measure-1) var(--measure-1) var(--measure-1);
+  border-radius: var(--measure-1) var(--measure-1) var(--measure-1) var(--measure-1);
+}
 
-  margin-bottom: var(--measure-1);
+.node > div {
+  display: flex;
+  flex-direction: column;
+
+  z-index: 1;
+
 }
 
 .node h1 {
-  grid-row: 1;
-  grid-column: 1;
-
-  margin-top: 0;
-
   background-color: var(--color-node-header);
   color: var(--color-text-lt);
-  border-radius: var(--measure-2) 0 var(--measure-1) 0;
+  border-radius: var(--measure-1) var(--measure-1) var(--measure-1) var(--measure-1);
 
-  justify-content: center;
-  font-size: var(--measure-2);
-  padding: var(--measure-half) var(--measure-1) var(--measure-half) var(--measure-1);
+  padding: var(--measure-half);
+  
+  margin-top: calc(-1*var(--measure-half));
+  margin-bottom: var(--measure-half);
+  margin-left: calc(-1*var(--measure-half));
+  margin-right: var(--measure-half);
 }
-
-.node div { /* where the buttons are */
-  grid-column: 2;
-  grid-row: 1 / span 2;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-}
-
 
 .node p {
-  grid-row: 2;
-  grid-column: 1;
-  min-height: 1rem;
-  padding: var(--measure-1);
+  padding-right: var(--measure-half);
+}
+
+/* styling for node data types */
+.node span {
+  font-family: 'Share Tech Mono', monospace;
+  background-color: #BBBBBB;
 }
 
 .node ul {

@@ -4,14 +4,12 @@ import * as Redux from 'redux';
 import * as ReactRedux from 'react-redux';
 
 import * as ChakraUI from '@chakra-ui/react';
-import anime from 'animejs/lib/anime.es.js';
-/* recursive deepupdate function for JS objects */
-import { merge } from 'lodash';
 
 import './index.css';
 
 import { default_data } from './kadabra.js';
-import { JSONTextEntry, TerminalBox, RootNode } from './components.js';
+import { JSONTextEntry, TerminalBox } from './components.js';
+import { TreeDisplay } from './buchheim.js';
 
 /****************************************/
 
@@ -42,7 +40,8 @@ const initialState = {
   terminalFocus: false,
   jsonObject: null,
   consoleLog: [],
-  focusedNode: 'root',
+  focusedNode: '.',
+  focusedNodeObject: {}
 }
 
 const rootReducer = (state=initialState, action) => {
@@ -100,31 +99,80 @@ const rootReducer = (state=initialState, action) => {
           return (state);
         }
       case 'focus_terminal':
-        state.cursorAnimationObj.play();
+        state.cursorAnimationObj?.play();
         return {
           ...state,
           terminalFocus: true,
         };
       case 'blur_terminal':
-        state.cursorAnimationObj.pause();
-        state.cursorAnimationObj.restart();
+        state.cursorAnimationObj?.pause();
+        state.cursorAnimationObj?.restart();
         return {
           ...state,
           terminalFocus: false
         }
       case 'focus_node':
+        alert(`Focusing node......... Trying harder.....`);
+        console.log(state);
+        console.log(action.payload);
         return {
           ...state,
-          nodeFocus: action.payload,
+          focusedNodeObject: action.payload,
+          focusedNode: action.payload.nodePath,
           terminalFocus: false
         };
       case 'blur_node':
         return {
           ...state,
-          nodeFocus: false
+          focusedNode: false
+        };
+      case 'focus_prev_sibling':
+        //alert(`PRESSED UP ARROW`);
+        if (state.focusedNodeObject.getPrevSibling()) {
+          return {
+            ...state,
+            focusedNodeObject: state.focusedNodeObject.getPrevSibling(),
+            focusedNode: state.focusedNodeObject.getPrevSibling().nodePath
+          };
+        } else {
+          return (state);
+        }
+        
+      case 'focus_next_sibling':
+        //alert(`PRESSED DOWN ARROW`);
+        if (state.focusedNodeObject.getNextSibling()) {
+          return {
+            ...state,
+            focusedNodeObject: state.focusedNodeObject.getNextSibling(),
+            focusedNode: state.focusedNodeObject.getNextSibling().nodePath
+          };
+        } else {
+          return (state);
+        }
+      case 'focus_parent':
+        //alert(`PRESSED LEFT ARROW`);
+        if (state.focusedNodeObject?.parent) {
+          return {
+            ...state,
+            focusedNodeObject: state.focusedNodeObject.parent,
+            focusedNode: state.focusedNodeObject.parent.nodePath
+          };
+        } else {
+          return (state);
+        }
+      case 'focus_child':
+        //alert(`PRESSED RIGHT ARROW`);
+        if (state.focusedNodeObject.childrenNodes.length) {
+          return {
+            ...state,
+            focusedNodeObject: state.focusedNodeObject.childrenNodes[0],
+            focusedNode: state.focusedNodeObject.childrenNodes[0].nodePath
+          };
+        } else {
+          return (state);
         }
       default:
-          return state;
+          return (state);
   }
 }
 
@@ -137,7 +185,7 @@ const App = () => {
     <div className="layout_grid">
       <JSONTextEntry />
       <TerminalBox />
-      <RootNode />
+      <TreeDisplay />
     </div>
   );
 };

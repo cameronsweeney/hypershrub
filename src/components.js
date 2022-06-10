@@ -6,8 +6,6 @@ import Typewriter from 'react-typewriter';
 
 import anime from 'animejs/lib/anime.es.js';
 
-
-
 /******************************* */
 
 function terminalValidSelector(state) {
@@ -210,15 +208,17 @@ const ChildrenNodes = (node) => {
     }
 }
 
-export const RootNode = () => {
+
+/*
+export const TreeDisplay = () => {
     const jsonObject = ReactRedux.useSelector( (state) => (state.jsonObject) );
+    const nodeFocus = ReactRedux.useSelector( (state) => (state.nodeFocus) ); 
     
     return (
         <div className="tree_display">
             <SimpleNode id="root" key="Root" label="Root" content="Root node"/>
-            <ChildrenNodes key="root children" parentRef="root" object={jsonObject} />
         </div>
     );
 }
-
+*/
 ////////////////////////////////////////////////////// 
